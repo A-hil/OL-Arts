@@ -1,8 +1,7 @@
 
 'use client'
 import { useEffect, useState } from 'react'
-import { NAV_LINKS } from '../app/data'
-import { Link } from 'lucide-react'
+import Link from 'next/link'
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -34,15 +33,21 @@ export default function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-1">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="px-4 py-2 text-sm font-medium text-[#49454F] hover:text-[#C1694F] transition-colors rounded-full hover:bg-[#FBF0EC]"
-            >
-              {link.name}
+            <a href="#work" className="px-4 py-2 text-sm font-medium text-[#49454F] hover:text-[#C1694F] transition-colors rounded-full hover:bg-[#FBF0EC]">
+              Работы
             </a>
-          ))}
+            <a href="#timeline" className="px-4 py-2 text-sm font-medium text-[#49454F] hover:text-[#C1694F] transition-colors rounded-full hover:bg-[#FBF0EC]">
+              Хронология
+            </a>
+            <a href="#services" className="px-4 py-2 text-sm font-medium text-[#49454F] hover:text-[#C1694F] transition-colors rounded-full hover:bg-[#FBF0EC]">
+              Услуги
+            </a>
+            <a href="#events" className="px-4 py-2 text-sm font-medium text-[#49454F] hover:text-[#C1694F] transition-colors rounded-full hover:bg-[#FBF0EC]">
+              События
+            </a>
+            <a href="#contact" className="px-4 py-2 text-sm font-medium text-[#49454F] hover:text-[#C1694F] transition-colors rounded-full hover:bg-[#FBF0EC]">
+              Контакты
+            </a>
         </nav>
 
         {/* CTA */}
@@ -68,17 +73,22 @@ export default function Header() {
       {/* Mobile Nav */}
       {menuOpen && (
         <div className="md:hidden bg-white border-t border-[#E8E0E6] px-6 py-4 flex flex-col gap-2">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="py-2 text-sm font-medium text-[#49454F] hover:text-[#C1694F]"
-            >
-              {link.name}
+            <a href="#work" onClick={() => setMenuOpen(false)} className="py-2 text-sm font-medium text-[#49454F] hover:text-[#C1694F]">
+              Работы
             </a>
-          ))}
-          <a
+            <a href="#timeline" onClick={() => setMenuOpen(false)} className="py-2 text-sm font-medium text-[#49454F] hover:text-[#C1694F]">
+              Хронология
+            </a>
+            <a href="#services" onClick={() => setMenuOpen(false)} className="py-2 text-sm font-medium text-[#49454F] hover:text-[#C1694F]">
+              Услуги
+            </a>
+            <a href="#events" onClick={() => setMenuOpen(false)} className="py-2 text-sm font-medium text-[#49454F] hover:text-[#C1694F]">
+              События
+            </a>
+            <a href="#contact" onClick={() => setMenuOpen(false)} className="py-2 text-sm font-medium text-[#49454F] hover:text-[#C1694F]">
+              Контакты
+            </a>
+            <a
             href="#contact"
             onClick={() => setMenuOpen(false)}
             className="mt-2 px-5 py-3 bg-[#C1694F] text-white text-sm font-semibold rounded-full text-center"

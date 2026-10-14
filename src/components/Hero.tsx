@@ -1,6 +1,20 @@
 import Image from 'next/image';
 import StatusPill from './StatusPill';
 
+export async function generateMetadata(params: any, searchParams: any) {
+  const post = await fetchData(params.id)
+  return {
+    title: post.title,
+    description: post.body
+  };
+}
+
+async function fetchData(id: string) {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+  const result = await res.json();
+  return result;
+}
+
 export default function Hero() {
   return (
     <section className="min-h-screen bg-[#F8F9FA] pt-24 pb-16 px-6">
@@ -27,14 +41,18 @@ export default function Hero() {
             </p>
 
             <div className="flex flex-wrap gap-8 pt-2">
-              {[['30+', 'Лет в профессии'], ['340+', 'Каталогизировано работ'], ['12', 'Стран с выставками']].map(
-                ([n, l]) => (
-                  <div key={l}>
-                    <div className="font-serif text-3xl font-bold text-[#1C1B1F]">{n}</div>
-                    <div className="text-xs font-medium text-[#79747E] mt-0.5 uppercase tracking-wider">{l}</div>
-                  </div>
-                )
-              )}
+              <div>
+                <div className="font-serif text-3xl font-bold text-[#1C1B1F]">30</div>
+                <div className="text-xs font-medium text-[#79747E] mt-0.5 uppercase tracking-wider">Лет в профессии</div>
+              </div>
+              <div>
+                <div className="font-serif text-3xl font-bold text-[#1C1B1F]">340+</div>
+                <div className="text-xs font-medium text-[#79747E] mt-0.5 uppercase tracking-wider">Каталогизировано работ</div>
+              </div>
+              <div>
+                <div className="font-serif text-3xl font-bold text-[#1C1B1F]">12</div>
+                <div className="text-xs font-medium text-[#79747E] mt-0.5 uppercase tracking-wider">Стран с выставками</div>
+              </div>
             </div>
 
             <div className="flex flex-wrap gap-3 pt-2">
@@ -56,7 +74,7 @@ export default function Hero() {
           {/* Right: Featured artwork card */}
           <div className="relative">
             <div className="bg-white rounded-[24px] overflow-hidden shadow-xl shadow-black/8 border border-[#E8E0E6]">
-              <div className="relative overflow-hidden bg-[#E8D5CC]" style={{ aspectRatio: '4/5' }}>
+              <div className="relative aspect-[4/5] overflow-hidden bg-[#E8D5CC]">
                 <Image
                   src="https://images.unsplash.com/photo-1581931253-ee89b0c7e90d?w=600&h=750&fit=crop&auto=format"
                   alt="Сосуд STALKER № 1 — терракотовая керамика с индустриальной текстурой"
@@ -85,14 +103,8 @@ export default function Hero() {
             </div>
 
             {/* Decorative element */}
-            <div
-              className="absolute -top-6 -right-6 w-32 h-32 rounded-full opacity-15 -z-10"
-              style={{ background: 'radial-gradient(circle, #C1694F, transparent)' }}
-            />
-            <div
-              className="absolute -bottom-4 -left-4 w-24 h-24 rounded-full opacity-10 -z-10"
-              style={{ background: 'radial-gradient(circle, #9E4A34, transparent)' }}
-            />
+            <div className="absolute -top-6 -right-6 -z-10 h-32 w-32 rounded-full bg-[radial-gradient(circle,_#C1694F,_transparent)] opacity-15" />
+            <div className="absolute -bottom-4 -left-4 -z-10 h-24 w-24 rounded-full bg-[radial-gradient(circle,_#9E4A34,_transparent)] opacity-10" />
           </div>
         </div>
       </div>

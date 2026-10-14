@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Artist {
+  id          Int    @id @default(autoincrement())
+  name        String @default("Оксана")
+  lastName    String @default("Лапа")
+  email       String @default("oksana.lapa@example.com") @unique
+  description String @default("Оксана Лапа - художник, дизайнер и иллюстратор. Она создает уникальные произведения искусства, вдохновленные природой и культурой. Ее работы отличаются яркими цветами, оригинальными формами и глубоким смыслом. Оксана активно участвует в выставках и проектах, делясь своим творчеством с миром.")
+}
+
+model posts {
+  id          Int      @id @default(autoincrement())
+  title       String
+  years       String
+  description String
+  highlights  String[] @default([])
+  image       String
+}
+
+model gallery {
+  id       Int      @id @default(autoincrement())
+  title    String
+  category String
+  description String 
+  price    Int
+  status   String[] @default([])
+  is_tall  Boolean
+  image    String
+  year     Int
+}

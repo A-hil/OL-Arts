@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react'
-import { CATEGORIES, GALLERY } from '../app/data'
+import { CATEGORIES, GALLERY } from '../data/artwork-content'
 import StatusPill from './StatusPill'
 
 export default function Gallery() {
@@ -47,10 +47,7 @@ export default function Gallery() {
               key={item.id}
               className="break-inside-avoid bg-white rounded-[16px] overflow-hidden border border-[#E8E0E6] hover:shadow-xl hover:shadow-black/8 hover:-translate-y-1 transition-all duration-300 group"
             >
-              <div
-                className="relative overflow-hidden bg-[#E8D5CC]"
-                style={{ aspectRatio: item.tall ? '3/4' : '4/3' }}
-              >
+              <div className={`relative overflow-hidden bg-[#E8D5CC] ${item.tall ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
                 <Image
                   src={`https://images.unsplash.com/${item.image}?w=400&h=${item.tall ? 533 : 300}&fit=crop&auto=format`}
                   alt={item.title}
