@@ -3,7 +3,9 @@
 import Link from 'next/link'
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { ArrowUpRight, Image as ImageIcon, Pencil, Plus, Search, Trash2, X } from 'lucide-react'
-import { CATEGORIES, GALLERY } from '../../data/artwork-content'
+import { GALLERY } from '../../data/artwork-content'
+
+const CATEGORIES = ['Все', 'Керамика', 'Народные сосуды', 'Серия STALKER', 'Живопись', 'Гравюры'] as const;
 
 type Artwork = {
   id: number
@@ -45,64 +47,8 @@ export default function AdminPage() {
   const [editingId, setEditingId] = useState<number | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
 
-  useEffect(() => {
-    try {
-      const savedItems = localStorage.getItem(STORAGE_KEY)
-      if (savedItems) {
-        const parsed: unknown = JSON.parse(savedItems)
-        if (Array.isArray(parsed)) setItems(parsed as Artwork[])
-      }
-    } catch {
-      localStorage.removeItem(STORAGE_KEY)
-    }
-    setStorageReady(true)
-  }, [])
+  const data = {};
 
-  useEffect(() => {
-    if (storageReady) localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
-  }, [items, storageReady])
-
-  const filteredItems = useMemo(() => {
-    const normalizedQuery = query.trim().toLocaleLowerCase('ru')
-    return items.filter((item) => {
-      const matchesQuery = !normalizedQuery || `${item.title} ${item.category}`.toLocaleLowerCase('ru').includes(normalizedQuery)
-      const matchesCategory = categoryFilter === 'Все' || item.category === categoryFilter
-      const matchesStatus = statusFilter === 'Все статусы' || item.status === statusFilter
-      return matchesQuery && matchesCategory && matchesStatus
-    })
-  }, [items, query, categoryFilter, statusFilter])
-
-  const availableCount = items.filter((item) => item.status === 'В наличии').length
-
-  function openNewArtwork() {
-    setEditingId(null)
-    setForm({ ...EMPTY_FORM, year: new Date().getFullYear() })
-    setDialogOpen(true)
-  }
-
-  function openEditArtwork(item: Artwork) {
-    const { id, tall, ...formValues } = item
-    setEditingId(id)
-    setForm(formValues)
-    setDialogOpen(true)
-  }
-
-  function saveArtwork(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    if (editingId === null) {
-      const nextId = Math.max(0, ...items.map((item) => item.id)) + 1
-      setItems((current) => [{ ...form, id: nextId }, ...current])
-    } else {
-      setItems((current) => current.map((item) => item.id === editingId ? { ...item, ...form } : item))
-    }
-    setDialogOpen(false)
-  }
-
-  function deleteArtwork(id: number) {
-    if (window.confirm('Удалить эту работу из каталога?')) {
-      setItems((current) => current.filter((item) => item.id !== id))
-    }
-  }
 
   return (
     <main className="min-h-screen bg-[#f7f7f5] text-[#242522]">
@@ -125,7 +71,7 @@ export default function AdminPage() {
             <h1 className="font-serif text-3xl font-semibold tracking-tight sm:text-4xl">Работы галереи</h1>
             <p className="mt-2 text-sm text-[#777871]">Управление произведениями и их статусом</p>
           </div>
-          <button onClick={openNewArtwork} className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#292a26] px-4 text-sm font-medium text-white transition-colors hover:bg-[#44453f]">
+          <button className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#292a26] px-4 text-sm font-medium text-white transition-colors hover:bg-[#44453f]">
             <Plus size={16} /> Добавить работу
           </button>
         </div>
@@ -137,17 +83,21 @@ export default function AdminPage() {
           </div>
           <div className="px-5 py-4 sm:border-r sm:border-[#e3e3dd] sm:px-6">
             <p className="text-xs text-[#85867f]">В наличии</p>
-            <p className="mt-1 text-2xl font-semibold tabular-nums">{availableCount}</p>
+            <p className="mt-1 text-2xl font-semibold tabular-nums">
+              {/* 
+              Внести логику счетчика передаваемого обьекта и его элементов
+              */}
+            </p>
           </div>
           <div className="col-span-2 hidden px-6 py-4 sm:col-span-1 sm:block">
-            <p className="text-xs text-[#85867f]">Источник изменений</p>
-            <p className="mt-2 text-sm font-medium">Этот браузер</p>
+            <p className="text-xs text-[#85867f]">Последние изменение</p>
+            <p className="mt-2 text-sm font-medium">...</p>
           </div>
         </section>
 
         <section className="mt-8" aria-label="Список работ">
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-sm font-semibold">Каталог <span className="ml-1 font-normal text-[#85867f]">{filteredItems.length}</span></h2>
+            <h2 className="text-sm font-semibold">Каталог <span className="ml-1 font-normal text-[#85867f]"></span></h2>
             <div className="flex flex-col gap-2 sm:flex-row">
               <label className="relative block sm:w-64">
                 <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#969790]" />
@@ -177,7 +127,7 @@ export default function AdminPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredItems.map((item) => (
+                  {data.map((item) => (
                     <tr key={item.id} className="border-b border-[#efefeb] last:border-0 hover:bg-[#fdfdfc]">
                       <td className="px-5 py-3">
                         <div className="flex items-center gap-3">
@@ -204,7 +154,6 @@ export default function AdminPage() {
               </table>
             </div>
           </div>
-          <p className="mt-3 text-xs text-[#92938d]">Изменения сохраняются локально в этом браузере и пока не синхронизируются с PostgreSQL.</p>
         </section>
       </div>
 

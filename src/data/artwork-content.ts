@@ -37,7 +37,7 @@ export const TIMELINE = [
   },
 ] as const;
 
-export const CATEGORIES = ['Все', 'Керамика', 'Народные сосуды', 'Серия STALKER', 'Живопись', 'Гравюры'] as const;
+
 
 export const GALLERY = [
   {

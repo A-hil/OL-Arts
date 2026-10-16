@@ -1,19 +1,6 @@
 import Image from 'next/image';
 import StatusPill from './StatusPill';
 
-export async function generateMetadata(params: any, searchParams: any) {
-  const post = await fetchData(params.id)
-  return {
-    title: post.title,
-    description: post.body
-  };
-}
-
-async function fetchData(id: string) {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-  const result = await res.json();
-  return result;
-}
 
 export default function Hero() {
   return (
@@ -26,24 +13,23 @@ export default function Hero() {
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#FBF0EC] rounded-full">
               <span className="w-2 h-2 bg-[#C1694F] rounded-full animate-pulse" />
               <span className="text-xs font-semibold text-[#C1694F] tracking-wide uppercase">
-                Открыта для заказов · 2026
+                TagName
               </span>
             </div>
 
             <h1 className="font-serif text-[clamp(3rem,8vw,5.5rem)] font-bold text-[#1C1B1F] leading-[1.05] tracking-tight">
-              30 лет<br />
-              <span className="italic text-[#C1694F]">в искусстве</span>
+              Какой-то<br />
+              <span className="italic text-[#C1694F]">заголовок</span>
             </h1>
 
             <p className="text-[#49454F] text-lg leading-relaxed max-w-[520px]">
-              Нино Беридзе — грузинский художник-керамист, чья практика охватывает преподавание, сохранение народного гончарства
-              и современные выставки. Ее серия STALKER была показана в Венеции, Берлине и Токио.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </p>
 
             <div className="flex flex-wrap gap-8 pt-2">
               <div>
                 <div className="font-serif text-3xl font-bold text-[#1C1B1F]">30</div>
-                <div className="text-xs font-medium text-[#79747E] mt-0.5 uppercase tracking-wider">Лет в профессии</div>
+                <div className="text-xs font-medium text-[#79747E] mt-0.5 uppercase tracking-wider">Лет в деле</div>
               </div>
               <div>
                 <div className="font-serif text-3xl font-bold text-[#1C1B1F]">340+</div>
@@ -77,7 +63,7 @@ export default function Hero() {
               <div className="relative aspect-[4/5] overflow-hidden bg-[#E8D5CC]">
                 <Image
                   src="https://images.unsplash.com/photo-1581931253-ee89b0c7e90d?w=600&h=750&fit=crop&auto=format"
-                  alt="Сосуд STALKER № 1 — терракотовая керамика с индустриальной текстурой"
+                  alt=""
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 420px"
