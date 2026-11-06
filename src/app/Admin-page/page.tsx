@@ -1,11 +1,12 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useMemo, useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent} from 'react'
 import { ArrowUpRight, Image as ImageIcon, Pencil, Plus, Search, Trash2, X } from 'lucide-react'
-import { GALLERY } from '../../data/artwork-content'
-
-const CATEGORIES = ['Все', 'Керамика', 'Народные сосуды', 'Серия STALKER', 'Живопись', 'Гравюры'] as const;
+import { CATEGORIES, type Status } from '../../data/artwork-content'
+import { statusStyle } from '../../lib/statusStyle'
+import { getImageSrc } from '../../lib/imageSrc'
 
 type Artwork = {
   id: number
@@ -18,27 +19,33 @@ type Artwork = {
   tall?: boolean
 }
 
-type ArtworkForm = Omit<Artwork, 'id' | 'tall'>
+type GalleryFromApi = {
+  id: number
+  title: string
+  category: string
+  price: number
+  status: Status[]
+  image: string
+  year: number
+  is_tall: boolean
+}
+
+type ArtworkForm = Omit<Artwork, 'id' | 'is_tall'>
+
 
 const STORAGE_KEY = 'ol-arts-admin-gallery'
 const STATUSES = ['В наличии', 'Продано', 'Зарезервировано'] as const
 const EMPTY_FORM: ArtworkForm = {
   title: '',
-  category: 'Керамика',
+  category: '',
   price: '',
   status: 'В наличии',
   image: '',
   year: 2026,
 }
 
-function statusStyle(status: string) {
-  if (status === 'В наличии') return 'bg-emerald-50 text-emerald-800'
-  if (status === 'Продано') return 'bg-stone-100 text-stone-600'
-  return 'bg-amber-50 text-amber-800'
-}
-
 export default function AdminPage() {
-  const [items, setItems] = useState<Artwork[]>(() => GALLERY.map((item) => ({ ...item })))
+  const [items, setItems] = useState<Artwork[]>([])
   const [storageReady, setStorageReady] = useState(false)
   const [query, setQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('Все')
@@ -47,7 +54,95 @@ export default function AdminPage() {
   const [editingId, setEditingId] = useState<number | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
 
-  const data = {};
+  useEffect(() => {
+    async function loadGallery() {
+      const response = await fetch('/api/data/GET')
+      const result = await response.json()
+      const gallery: GalleryFromApi[] = result.galereia
+
+      setItems(
+        gallery.map((item) => ({
+          id: item.id,
+          title: item.title,
+          category: item.category,
+          price: `${item.price} руб.`,
+          status: item.status[0] ?? 'В наличии',
+          image: item.image,
+          year: item.year,
+          tall: item.is_tall,
+        }))
+      )
+    }
+
+    loadGallery()
+  }, [])
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+        if (form.image.trim().startsWith('blob:')) {
+          throw new Error('Временная ссылка blob: недоступна на сайте. Используйте постоянную публичную ссылку https://.')
+        }
+
+        const response = await fetch('/api/data/POST', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(form)
+        })
+        const result: { item?: GalleryFromApi; message?: string } = await response.json()
+        if (!response.ok || !result.item) {
+          throw new Error(result.message ?? 'Не удалось сохранить работу')
+        }
+
+        const item = result.item
+        setItems((currentItems) => [
+          ...currentItems,
+          {
+            id: item.id,
+            title: item.title,
+            category: item.category,
+            price: `${item.price} руб.`,
+            status: item.status[0] ?? '',
+            image: item.image,
+            year: item.year,
+            tall: item.is_tall,
+          },
+        ])
+        setForm(EMPTY_FORM)
+        setDialogOpen(false)
+        alert('Работа успешно добавлена')
+    } catch (error) {
+        console.error('Не удалось создать работу:', error)
+        alert(error instanceof Error ? error.message : 'Не удалось создать работу')
+    }
+  }
+
+const DeleteThis = async (id: number) => {
+  try {
+    const response = await fetch('/api/data/DELETE', {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({id})
+    })
+    const result: { message?: string } = await response.json()
+
+    if (!response.ok) {
+      throw new Error(result.message ?? 'Не удалось удалить работу')
+    }
+
+    setItems((currentItems) =>
+      currentItems.filter((item) => item.id !== id)
+    )
+  } catch (error) {
+    console.error('Не удалось удалить работу:', error)
+    alert(error instanceof Error ? error.message : 'Не удалось удалить работу')
+  }
+}
+
 
 
   return (
@@ -71,7 +166,7 @@ export default function AdminPage() {
             <h1 className="font-serif text-3xl font-semibold tracking-tight sm:text-4xl">Работы галереи</h1>
             <p className="mt-2 text-sm text-[#777871]">Управление произведениями и их статусом</p>
           </div>
-          <button className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#292a26] px-4 text-sm font-medium text-white transition-colors hover:bg-[#44453f]">
+          <button onClick={() => { setForm(EMPTY_FORM); setEditingId(null); setDialogOpen(true) }} className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#292a26] px-4 text-sm font-medium text-white transition-colors hover:bg-[#44453f]">
             <Plus size={16} /> Добавить работу
           </button>
         </div>
@@ -84,9 +179,7 @@ export default function AdminPage() {
           <div className="px-5 py-4 sm:border-r sm:border-[#e3e3dd] sm:px-6">
             <p className="text-xs text-[#85867f]">В наличии</p>
             <p className="mt-1 text-2xl font-semibold tabular-nums">
-              {/* 
-              Внести логику счетчика передаваемого обьекта и его элементов
-              */}
+              {items.filter((item) => item.status === 'В наличии').length}
             </p>
           </div>
           <div className="col-span-2 hidden px-6 py-4 sm:col-span-1 sm:block">
@@ -127,11 +220,22 @@ export default function AdminPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((item) => (
+                  {items.map((item) => (
                     <tr key={item.id} className="border-b border-[#efefeb] last:border-0 hover:bg-[#fdfdfc]">
                       <td className="px-5 py-3">
                         <div className="flex items-center gap-3">
-                          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded bg-[#f1eeea] text-[#a79b91]"><ImageIcon size={18} strokeWidth={1.5} /></div>
+                          <div className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded bg-[#f1eeea] text-[#a79b91]">
+                            {item.image && (
+                              <Image
+                                src={getImageSrc(item.image, 44, 44)}
+                                alt={item.title}
+                                width={44}
+                                height={44}
+                                unoptimized
+                                className="h-full w-full object-cover"
+                              />
+                            )}
+                          </div>
                           <span className="text-sm font-medium">{item.title}</span>
                         </div>
                       </td>
@@ -142,12 +246,12 @@ export default function AdminPage() {
                       <td className="px-5 py-3">
                         <div className="flex justify-end gap-1">
                           <button onClick={() => openEditArtwork(item)} aria-label={`Редактировать: ${item.title}`} title="Редактировать" className="rounded p-2 text-[#73746e] hover:bg-[#f0efeb] hover:text-[#242522]"><Pencil size={15} /></button>
-                          <button onClick={() => deleteArtwork(item.id)} aria-label={`Удалить: ${item.title}`} title="Удалить" className="rounded p-2 text-[#92938d] hover:bg-red-50 hover:text-red-700"><Trash2 size={15} /></button>
+                          <button onClick={() => DeleteThis(item.id)} aria-label={`Удалить: ${item.title}`} title="Удалить" className="rounded p-2 text-[#92938d] hover:bg-red-50 hover:text-red-700"><Trash2 size={15} /></button>
                         </div>
                       </td>
                     </tr>
                   ))}
-                  {filteredItems.length === 0 && (
+                  {items.length === 0 && (
                     <tr><td colSpan={6} className="px-5 py-14 text-center text-sm text-[#85867f]">Ничего не найдено</td></tr>
                   )}
                 </tbody>
@@ -159,20 +263,21 @@ export default function AdminPage() {
 
       {dialogOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/35 p-4" onMouseDown={(event) => { if (event.target === event.currentTarget) setDialogOpen(false) }}>
-          
+
           <section role="dialog" aria-modal="true" aria-labelledby="artwork-dialog-title" className="my-auto w-full max-w-lg rounded-lg border border-[#e5e5df] bg-white shadow-xl">
             <div className="flex items-center justify-between border-b border-[#ecece7] px-6 py-4">
               <h2 id="artwork-dialog-title" className="font-serif text-xl font-semibold">{editingId === null ? 'Новая работа' : 'Редактировать работу'}</h2>
               <button onClick={() => setDialogOpen(false)} aria-label="Закрыть" className="rounded p-2 text-[#777871] hover:bg-[#f4f4f1]"><X size={18} /></button>
             </div>
-            <form onSubmit={saveArtwork} className="space-y-4 px-6 py-5">
+            <form onSubmit={handleSubmit} className="space-y-4 px-6 py-5">
               <label className="block text-xs font-medium text-[#65665f]">Название
                 <input required value={form.title} onChange={(event) => setForm({ ...form, title: event.target.value })} className="mt-1.5 h-10 w-full rounded-md border border-[#dfdfd9] px-3 text-sm text-[#242522] outline-none focus:border-[#a65c46]" />
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <label className="block text-xs font-medium text-[#65665f]">Категория
-                  <select value={form.category} onChange={(event) => setForm({ ...form, category: event.target.value })} className="mt-1.5 h-10 w-full rounded-md border border-[#dfdfd9] bg-white px-3 text-sm text-[#242522] outline-none focus:border-[#a65c46]">
-                    {CATEGORIES.filter((category) => category !== 'Все').map((category) => <option key={category}>{category}</option>)}
+                  <select required value={form.category} onChange={(event) => setForm({ ...form, category: event.target.value })} className="mt-1.5 h-10 w-full rounded-md border border-[#dfdfd9] bg-white px-3 text-sm text-[#242522] outline-none focus:border-[#a65c46]">
+                    <option value="" disabled>Выберите категорию</option>
+                    {CATEGORIES.map((category) => <option key={category} value={category}>{category}</option>)}
                   </select>
                 </label>
                 <label className="block text-xs font-medium text-[#65665f]">Статус
@@ -189,13 +294,15 @@ export default function AdminPage() {
                   <input required type="number" min="1000" max="9999" value={form.year} onChange={(event) => setForm({ ...form, year: Number(event.target.value) })} className="mt-1.5 h-10 w-full rounded-md border border-[#dfdfd9] px-3 text-sm text-[#242522] outline-none focus:border-[#a65c46]" />
                 </label>
               </div>
-              <label className="block text-xs font-medium text-[#65665f]">Изображение: URL или Unsplash ID
-                <input value={form.image} onChange={(event) => setForm({ ...form, image: event.target.value })} placeholder="https://… или photo-…" className="mt-1.5 h-10 w-full rounded-md border border-[#dfdfd9] px-3 text-sm text-[#242522] outline-none focus:border-[#a65c46]" />
+              <label className="block text-xs font-medium text-[#65665f]">Изображение: публичный URL или Unsplash ID
+                <input required value={form.image} onChange={(event) => setForm({ ...form, image: event.target.value })} placeholder="https://… или photo-…" className="mt-1.5 h-10 w-full rounded-md border border-[#dfdfd9] px-3 text-sm text-[#242522] outline-none focus:border-[#a65c46]" />
+                <span className="mt-1 block font-normal text-[#85867f]">Временные ссылки blob: (например, из Telegram) не работают после закрытия исходной вкладки.</span>
               </label>
               <div className="flex justify-end gap-2 border-t border-[#ecece7] pt-4">
                 <button type="button" onClick={() => setDialogOpen(false)} className="h-10 rounded-md px-4 text-sm text-[#62635d] hover:bg-[#f4f4f1]">Отмена</button>
-                <button type="submit" className="h-10 rounded-md bg-[#292a26] px-4 text-sm font-medium text-white hover:bg-[#44453f]" 
-                >Сохранить    
+
+                <button type="submit" className="h-10 rounded-md bg-[#292a26] px-4 text-sm font-medium text-white hover:bg-[#44453f]"
+                >Сохранить
                 </button>
               </div>
             </form>

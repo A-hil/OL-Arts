@@ -11,7 +11,7 @@
     "postinstall": "prisma skills sync || exit 0"
   },
   "prisma": {
-    "seed": "tsx src/app/api/data/seed.ts"
+    "seed": "tsx src/app/api/data/GET/seed.ts"
   },
   "repository": {
     "type": "git",
@@ -33,9 +33,9 @@
     "@prisma/client": "^7.10.0",
     "dotenv": "^18.0.4",
     "lucide-react": "^1.48.0",
-    "next": "^16.3.6",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
+    "next": "^16.4.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {

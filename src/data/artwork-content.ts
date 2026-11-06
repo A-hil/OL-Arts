@@ -38,61 +38,6 @@ export const TIMELINE = [
 ] as const;
 
 
+export const CATEGORIES = ['Категория 1', 'Категория 2', 'Категория 3'] as const;
 
-export const GALLERY = [
-  {
-    id: 1, title: 'Сосуд № 14', category: 'Серия STALKER',
-    price: '€2,400', status: 'В наличии', tall: true,
-    image: 'photo-1581931253-ee89b0c7e90d',
-    year: 2023,
-  },
-  {
-    id: 2, title: 'Кахетинская чаша', category: 'Народные сосуды',
-    price: '€680', status: 'В наличии',
-    image: 'photo-1565193566173-7a0ee3dbe261',
-    year: 2019,
-    tall: false,
-  },
-  {
-    id: 3, title: 'Фрагмент руин III', category: 'Серия STALKER',
-    price: '€3,100', status: 'Продано',
-    image: 'photo-1578749556568-bc2c40e68b61',
-    year: 2022,
-    tall: false,
-  },
-  {
-    id: 4, title: 'Горная песнь', category: 'Живопись',
-    price: '€1,200', status: 'В наличии', tall: true,
-    image: 'photo-1577083552431-6e5fd01aa342',
-    year: 2021,
-  },
-  {
-    id: 5, title: 'Древний урожай', category: 'Керамика',
-    price: '€890', status: 'Зарезервировано',
-    image: 'photo-1606722590583-6951b5ea92ad',
-    year: 2020,
-    tall: false,
-  },
-  {
-    id: 6, title: 'Архивный осколок', category: 'Серия STALKER',
-    price: '€1,750', status: 'В наличии',
-    image: 'photo-1493106641515-5d1f1a3c0b58',
-    year: 2023,
-    tall: false,
-  },
-  {
-    id: 7, title: 'Фольклор #3', category: 'Гравюры',
-    price: '€320', status: 'В наличии',
-    image: 'photo-1513519245088-0e12902e5a38',
-    year: 2022,
-    tall: false,
-  },
-  {
-    id: 8, title: 'Тбилисская терракота', category: 'Керамика',
-    price: '€740', status: 'В наличии', tall: true,
-    image: 'photo-1552862750-746b8f6f7f25',
-    year: 2021,
-  },
-] as const;
-
-export type Status = (typeof GALLERY)[number]['status'];
+export type Status = 'В наличии' | 'Продано' | 'Зарезервировано'

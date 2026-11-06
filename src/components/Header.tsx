@@ -2,6 +2,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -22,12 +23,12 @@ export default function Header() {
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-xl bg-[#C1694F] flex items-center justify-center">
-            <span className="font-serif text-white font-bold text-base leading-none">N</span>
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center">
+            <Image width={36} height={36} alt="Логотип" className="w-full h-full rounded-xl object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRypW4H3eXJ7Nhi1VcoHaXlxVbILlHnf1ULOwJ6Zw6BUQ&s=10"></Image>
           </div>
           <div>
-            <div className="font-serif font-bold text-[#1C1B1F] text-sm leading-tight">Нино Беридзе</div>
-            <div className="text-[10px] text-[#79747E] tracking-wider uppercase">Художник-керамист</div>
+            <div className="font-serif font-bold text-[#1C1B1F] text-sm leading-tight">User.name</div>
+            <div className="text-[10px] text-[#79747E] tracking-wider uppercase">description</div>
           </div>
         </Link>
 
