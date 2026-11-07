@@ -39,5 +39,3 @@ export const TIMELINE = [
 
 
 export const CATEGORIES = ['Категория 1', 'Категория 2', 'Категория 3'] as const;
-
-export type Status = 'В наличии' | 'Продано' | 'Зарезервировано'

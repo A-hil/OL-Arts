@@ -27,8 +27,8 @@ export default function Header() {
             <Image width={36} height={36} alt="Логотип" className="w-full h-full rounded-xl object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRypW4H3eXJ7Nhi1VcoHaXlxVbILlHnf1ULOwJ6Zw6BUQ&s=10"></Image>
           </div>
           <div>
-            <div className="font-serif font-bold text-[#1C1B1F] text-sm leading-tight">User.name</div>
-            <div className="text-[10px] text-[#79747E] tracking-wider uppercase">description</div>
+            <div className="font-serif font-bold text-[#1C1B1F] text-sm leading-tight"> Оксана Лапа</div>
+            <div className="text-[10px] text-[#79747E] tracking-wider uppercase">Художник-преподаватель</div>
           </div>
         </Link>
 

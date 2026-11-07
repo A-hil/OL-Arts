@@ -4,78 +4,35 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState, type FormEvent} from 'react'
 import { ArrowUpRight, Image as ImageIcon, Pencil, Plus, Search, Trash2, X } from 'lucide-react'
-import { CATEGORIES, type Status } from '../../data/artwork-content'
-import { statusStyle } from '../../lib/statusStyle'
-import { getImageSrc } from '../../lib/imageSrc'
+import { CATEGORIES } from '../../data/artwork-content'
+import { statusStyle } from '../../types/statusStyle'
+import { useGallery } from '../../hooks/useGallery'
+import type { GalleryFormValues, Status } from '../../types/gallery'
 
-type Artwork = {
-  id: number
-  title: string
-  category: string
-  price: string
-  status: string
-  image: string
-  year: number
-  tall?: boolean
-}
-
-type GalleryFromApi = {
-  id: number
-  title: string
-  category: string
-  price: number
-  status: Status[]
-  image: string
-  year: number
-  is_tall: boolean
-}
-
-type ArtworkForm = Omit<Artwork, 'id' | 'is_tall'>
-
-
-const STORAGE_KEY = 'ol-arts-admin-gallery'
-const STATUSES = ['В наличии', 'Продано', 'Зарезервировано'] as const
-const EMPTY_FORM: ArtworkForm = {
-  title: '',
-  category: '',
-  price: '',
-  status: 'В наличии',
-  image: '',
-  year: 2026,
+function isStatus(value: string): value is Status {
+  return value === 'В наличии' || value === 'Продано' || value === 'Зарезервировано'
 }
 
 export default function AdminPage() {
-  const [items, setItems] = useState<Artwork[]>([])
+
+  const STORAGE_KEY = 'ol-arts-admin-gallery'
+  const STATUSES = ['В наличии', 'Продано', 'Зарезервировано'] as const
+  const EMPTY_FORM: GalleryFormValues = {
+    title: '',
+    category: '',
+    price: '',
+    status: 'В наличии',
+    image: '',
+    year: 2026,
+  }
+  const { items, setItems, activeFilter, setActiveFilter, loadError } = useGallery()
   const [storageReady, setStorageReady] = useState(false)
   const [query, setQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('Все')
   const [statusFilter, setStatusFilter] = useState('Все статусы')
-  const [form, setForm] = useState<ArtworkForm>(EMPTY_FORM)
+  const [form, setForm] = useState<GalleryFormValues>(EMPTY_FORM)
   const [editingId, setEditingId] = useState<number | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
-
-  useEffect(() => {
-    async function loadGallery() {
-      const response = await fetch('/api/data/GET')
-      const result = await response.json()
-      const gallery: GalleryFromApi[] = result.galereia
-
-      setItems(
-        gallery.map((item) => ({
-          id: item.id,
-          title: item.title,
-          category: item.category,
-          price: `${item.price} руб.`,
-          status: item.status[0] ?? 'В наличии',
-          image: item.image,
-          year: item.year,
-          tall: item.is_tall,
-        }))
-      )
-    }
-
-    loadGallery()
-  }, [])
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -91,7 +48,7 @@ export default function AdminPage() {
           },
           body: JSON.stringify(form)
         })
-        const result: { item?: GalleryFromApi; message?: string } = await response.json()
+        const result = await response.json()
         if (!response.ok || !result.item) {
           throw new Error(result.message ?? 'Не удалось сохранить работу')
         }
@@ -107,7 +64,7 @@ export default function AdminPage() {
             status: item.status[0] ?? '',
             image: item.image,
             year: item.year,
-            tall: item.is_tall,
+            is_tall: item.is_tall,
           },
         ])
         setForm(EMPTY_FORM)
@@ -227,7 +184,7 @@ const DeleteThis = async (id: number) => {
                           <div className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded bg-[#f1eeea] text-[#a79b91]">
                             {item.image && (
                               <Image
-                                src={getImageSrc(item.image, 44, 44)}
+                                src={item.image}
                                 alt={item.title}
                                 width={44}
                                 height={44}
@@ -281,7 +238,10 @@ const DeleteThis = async (id: number) => {
                   </select>
                 </label>
                 <label className="block text-xs font-medium text-[#65665f]">Статус
-                  <select value={form.status} onChange={(event) => setForm({ ...form, status: event.target.value })} className="mt-1.5 h-10 w-full rounded-md border border-[#dfdfd9] bg-white px-3 text-sm text-[#242522] outline-none focus:border-[#a65c46]">
+                  <select value={form.status} onChange={(event) => {
+                    const status = event.target.value
+                    if (isStatus(status)) setForm({ ...form, status })
+                  }} className="mt-1.5 h-10 w-full rounded-md border border-[#dfdfd9] bg-white px-3 text-sm text-[#242522] outline-none focus:border-[#a65c46]">
                     {STATUSES.map((status) => <option key={status}>{status}</option>)}
                   </select>
                 </label>

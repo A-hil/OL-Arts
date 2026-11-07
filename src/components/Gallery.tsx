@@ -1,81 +1,13 @@
 "use client";
 
 import Image from 'next/image';
-import { CATEGORIES, type Status } from '../data/artwork-content'
-import { useEffect, useState } from 'react'
+import { CATEGORIES } from '../data/artwork-content'
+import { useGallery } from '../hooks/useGallery'
 import StatusPill from './StatusPill'
-import { getImageSrc } from '../lib/imageSrc'
-
-type GalleryItem = {
-  id: number
-  title: string
-  category: string
-  price: string
-  status: Status
-  image: string
-  year: number
-  tall: boolean
-}
-
-type GalleryApiItem = {
-  id: number
-  title: string
-  category: string
-  price: number
-  status: string[] | null
-  image: string
-  year: number
-  is_tall: boolean
-}
-
-function isStatus(value: string | undefined): value is Status {
-  return value === 'В наличии' || value === 'Продано' || value === 'Зарезервировано'
-}
 
 export default function Gallery() {
-  const [items, setItems] = useState<GalleryItem[]>([])
-  const [activeFilter, setActiveFilter] = useState('Все')
-  const [loadError, setLoadError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const controller = new AbortController()
-
-    async function loadGallery() {
-      try {
-        const response = await fetch('/api/data/GET', { signal: controller.signal })
-        if (!response.ok) throw new Error(`Не удалось загрузить каталог (${response.status})`)
-
-        const result: { galereia?: GalleryApiItem[] | null } = await response.json()
-        if (!Array.isArray(result.galereia)) throw new Error('Сервер вернул некорректный список работ')
-
-        setItems(
-          result.galereia.map((item) => {
-            const status = item.status?.[0]
-            return {
-              id: item.id,
-              title: item.title,
-              category: item.category,
-              price: `${item.price} руб.`,
-              status: isStatus(status) ? status : 'В наличии',
-              image: item.image,
-              year: item.year,
-              tall: item.is_tall,
-            }
-          })
-        )
-      } catch (error) {
-        if (controller.signal.aborted) return
-        console.error('Не удалось загрузить каталог:', error)
-        setLoadError(error instanceof Error ? error.message : 'Не удалось загрузить каталог')
-      }
-    }
-
-    loadGallery()
-    return () => controller.abort()
-  }, [])
-
+  const { items, activeFilter, setActiveFilter, loadError } = useGallery()
   const filterCategories = ['Все', ...new Set([...CATEGORIES, ...items.map((item) => item.category)])]
-
   const filtered = activeFilter === 'Все'
     ? items
     : items.filter((g) => g.category === activeFilter)
@@ -116,10 +48,10 @@ export default function Gallery() {
               key={item.id}
               className="break-inside-avoid bg-white rounded-[16px] overflow-hidden border border-[#E8E0E6] hover:shadow-xl hover:shadow-black/8 hover:-translate-y-1 transition-all duration-300 group"
             >
-              <div className={`relative overflow-hidden bg-[#E8D5CC] ${item.tall ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
+              <div className={`relative overflow-hidden bg-[#E8D5CC] ${item.is_tall ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
                 {item.image && (
                   <Image
-                    src={getImageSrc(item.image, 400, item.tall ? 533 : 300)}
+                    src={item.image}
                     alt={item.title}
                     fill
                     unoptimized
