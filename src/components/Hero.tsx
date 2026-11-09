@@ -1,8 +1,12 @@
 import Image from 'next/image';
 import StatusPill from './StatusPill';
+import { useGallery } from '../hooks/useGallery'
+
 
 
 export default function Hero() {
+    const { items, activeFilter, setActiveFilter, loadError } = useGallery()
+    const featuredItem = items[4]; //Выбранная работа из массива на главной
   return (
     <section className="min-h-screen bg-[#F8F9FA] pt-24 pb-16 px-6">
       <div className="max-w-6xl mx-auto">
@@ -59,21 +63,24 @@ export default function Hero() {
 
           {/* Right: Featured artwork card */}
           <div className="relative">
-            <div className="bg-white rounded-[24px] overflow-hidden shadow-xl shadow-black/8 border border-[#E8E0E6]">
+            {loadError && <p role="alert" className="text-sm text-red-700">{loadError}</p>}
+            {featuredItem && (<div className="bg-white rounded-[24px] overflow-hidden shadow-xl shadow-black/8 border border-[#E8E0E6]">
               <div className="relative aspect-[4/5] overflow-hidden bg-[#E8D5CC]">
+
                 <Image
-                  src="https://images.unsplash.com/photo-1581931253-ee89b0c7e90d?w=600&h=750&fit=crop&auto=format"
+                  src={featuredItem.image}
                   alt=""
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 420px"
                 />
+
+                
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
                   <div className="flex items-end justify-between">
                     <div>
-                      <p className="text-white/80 text-xs font-medium mb-1">Избранная работа</p>
-                      <p className="text-white font-serif font-bold text-xl">Сосуд STALKER № 1</p>
+                      <p className="text-white font-serif font-bold text-xl">{featuredItem.title}</p>
                     </div>
                     <StatusPill status="В наличии" />
                   </div>
@@ -81,12 +88,12 @@ export default function Hero() {
               </div>
               <div className="px-5 py-4 flex items-center justify-between">
                 <div>
-                  <p className="text-[#79747E] text-xs">Обожженная керамика, терракотовая глазурь</p>
-                  <p className="text-[#1C1B1F] font-bold text-sm mt-0.5">2023 · 42 cm</p>
+                  <p className="text-[#79747E] text-xs">бла бла бла</p>
+                  <p className="text-[#1C1B1F] font-bold text-sm mt-0.5">{featuredItem.year}</p>
                 </div>
-                <p className="font-serif text-xl font-bold text-[#C1694F]">€2,400</p>
+                <p className="font-serif text-xl font-bold text-[#C1694F]">{featuredItem.price}</p>
               </div>
-            </div>
+            </div>)}
 
             {/* Decorative element */}
             <div className="absolute -top-6 -right-6 -z-10 h-32 w-32 rounded-full bg-[radial-gradient(circle,_#C1694F,_transparent)] opacity-15" />

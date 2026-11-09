@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { CircleUserRound, LockKeyhole } from 'lucide-react'
+import { LockKeyhole } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -47,7 +47,7 @@ export default function Footer() {
           <p className="text-[#49454F] text-xs">© 2026 Нино Беридзе. Все права защищены.</p>
 
           <Link
-            href="./Admin-page"
+            href="/login"
             aria-label="Открыть панель администратора"
             title="Панель администратора"
             className="rounded-full p-2 text-[#C1694F]/40 transition-colors hover:bg-[#C1694F]/10 hover:text-[#C1694F]"
