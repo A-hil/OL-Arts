@@ -15,9 +15,9 @@ export default function Services() {
               <Palette className="w-8 h-8" strokeWidth={1.5} />
             </div>
             <h3 className="font-serif text-2xl font-bold text-[#1C1B1F] mb-1">Мастер-классы</h3>
-            <p className="text-[#79747E] text-xs font-semibold tracking-wide uppercase mb-4">Для серьезных практиков</p>
+            <p className="text-[#79747E] text-xs font-semibold tracking-wide uppercase mb-4">Практика в мастерской</p>
             <p className="text-[#49454F] text-sm leading-relaxed flex-1">
-              Интенсивные 3-дневные семинары, охватывающие ручную лепку, химию глазури и управление печью. Количество участников ограничено до 8 человек. Проводятся ежеквартально в Тбилиси и ежегодно в Берлине.
+              Интенсивные практические занятия по ручной росписи ткани, лепке из глины и работе с глазурями. Камерные группы до 8 человек позволяют каждому участнику создать собственное изделие под руководством мастеров студии.
             </p>
             <div className="mt-8 flex items-center justify-between">
               <p className="font-serif font-bold text-[#C1694F] text-lg">От €480</p>
@@ -28,18 +28,13 @@ export default function Services() {
           </div>
 
           <div className="rounded-[20px] p-8 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/8 border border-[#C1694F]/30 shadow-lg shadow-[#C1694F]/10 bg-white">
-            <div className="mb-4">
-              <span className="text-[10px] font-bold tracking-widest uppercase text-white bg-[#C1694F] px-3 py-1 rounded-full">
-                Самое популярное
-              </span>
-            </div>
             <div className="mb-4 text-[#C1694F]">
               <Paintbrush className="w-8 h-8" strokeWidth={1.5} />
             </div>
-            <h3 className="font-serif text-2xl font-bold text-[#1C1B1F] mb-1">Живопись на заказ</h3>
+            <h3 className="font-serif text-2xl font-bold text-[#1C1B1F] mb-1">Предметы на заказ</h3>
             <p className="text-[#79747E] text-xs font-semibold tracking-wide uppercase mb-4">Оригинальные работы</p>
             <p className="text-[#49454F] text-sm leading-relaxed flex-1">
-              Картины и керамические панно для частных коллекционеров, отелей и культурных учреждений. Каждый заказ начинается с 2-недельного этапа исследований и эскизов.
+              Создание живописи, текстильных панно и авторской керамики для частных интерьеров, бутик-отелей и креативных пространств. Каждый проект начинается с разработки индивидуальных эскизов и подбора фактур.
             </p>
             <div className="mt-8 flex items-center justify-between">
               <p className="font-serif font-bold text-[#C1694F] text-lg">От €2,000</p>
@@ -53,10 +48,10 @@ export default function Services() {
             <div className="mb-4 text-[#C1694F]">
               <ShoppingBag className="w-8 h-8" strokeWidth={1.5} />
             </div>
-            <h3 className="font-serif text-2xl font-bold text-[#1C1B1F] mb-1">Мерч STALKER</h3>
+            <h3 className="font-serif text-2xl font-bold text-[#1C1B1F] mb-1">Авторская одежда</h3>
             <p className="text-[#79747E] text-xs font-semibold tracking-wide uppercase mb-4">Носимые арт-объекты</p>
             <p className="text-[#49454F] text-sm leading-relaxed flex-1">
-              Ограниченный тираж одежды и архивных гравюр из керамической серии STALKER. Нумерованные издания, сертификат подлинности, доставка по всему миру в течение 7–10 дней.
+              Лимитированные капсулы одежды из натурального льна и хлопка с ручной росписью и принтами. Каждое изделие выпускается малым тиражом, сопровождается паспортом ручной работы и доставляется в течение 7–10 дней.
             </p>
             <div className="mt-8 flex items-center justify-between">
               <p className="font-serif font-bold text-[#C1694F] text-lg">От €65</p>

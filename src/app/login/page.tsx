@@ -11,7 +11,7 @@ export default function LoginPage() {
         <p className="mt-2 text-sm text-[#777871]">Войдите с помощью аккаунта Google.</p>
         <button
           type="button"
-          onClick={() => signIn('google', { callbackUrl: '/Admin-page' })}
+          onClick={() => signIn('google', { callbackUrl: '/' })}
           className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-[#242522] px-4 text-sm font-medium text-white transition-colors hover:bg-[#44453f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#a65c46]"
         >
           Продолжить с Google

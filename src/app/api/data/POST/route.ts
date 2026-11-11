@@ -5,7 +5,7 @@ export async function POST(request: Request) {
 
 try {
     const data = await request.json();
-    const { title, category, price, status, image, year } = data
+    const { title, category, price, status, image, year, is_tall } = data
     const newItem = await prisma.gallery.create({
         data: {
             title,
@@ -15,7 +15,7 @@ try {
             status: [status],
             image,
             year: Number(year),
-            is_tall: false,
+            is_tall: typeof is_tall === 'boolean' ? is_tall : false,
         },
         })
 

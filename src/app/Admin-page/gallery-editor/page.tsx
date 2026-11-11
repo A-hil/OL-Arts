@@ -24,6 +24,7 @@ export default function AdminPage() {
     status: 'В наличии',
     image: '',
     year: 2026,
+    is_tall: false,
   }
   const { items, setItems, activeFilter, setActiveFilter, loadError } = useGallery()
   const [storageReady, setStorageReady] = useState(false)
@@ -259,9 +260,30 @@ const DeleteThis = async (id: number) => {
                   <input required type="number" min="1000" max="9999" value={form.year} onChange={(event) => setForm({ ...form, year: Number(event.target.value) })} className="mt-1.5 h-10 w-full rounded-md border border-[#dfdfd9] px-3 text-sm text-[#242522] outline-none focus:border-[#a65c46]" />
                 </label>
               </div>
+
+              <label className="flex cursor-pointer items-center justify-between rounded-md border border-[#dfdfd9] px-4 py-3">
+                <span>
+                  <span className="block text-sm font-medium text-[#4f504a]">Формат работы</span>
+                  <span className="mt-0.5 block text-xs text-[#85867f]">
+                    {form.is_tall ? 'Расширенный формат' : 'Обычный формат'}
+                  </span>
+                </span>
+                <span className="relative inline-flex">
+                  <input
+                    type="checkbox"
+                    role="switch"
+                    checked={form.is_tall}
+                    onChange={(event) => setForm({ ...form, is_tall: event.target.checked })}
+                    aria-label="Высокий формат работы"
+                    className="peer sr-only"
+                  />
+                  <span className="h-6 w-11 rounded-full bg-[#d6d6d0] transition-colors peer-checked:bg-[#a65c46] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#a65c46] after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow-sm after:transition-transform peer-checked:after:translate-x-5" />
+                </span>
+              </label>
+
               <label className="block text-xs font-medium text-[#65665f]">Изображение: публичный URL или Unsplash ID
                 <input required value={form.image} onChange={(event) => setForm({ ...form, image: event.target.value })} placeholder="https://… или photo-…" className="mt-1.5 h-10 w-full rounded-md border border-[#dfdfd9] px-3 text-sm text-[#242522] outline-none focus:border-[#a65c46]" />
-                <span className="mt-1 block font-normal text-[#85867f]">Временные ссылки blob: (например, из Telegram) не работают после закрытия исходной вкладки.</span>
+                <span className="mt-1 block font-normal text-[#85867f]">URL</span>
               </label>
               <div className="flex justify-end gap-2 border-t border-[#ecece7] pt-4">
                 <button type="button" onClick={() => setDialogOpen(false)} className="h-10 rounded-md px-4 text-sm text-[#62635d] hover:bg-[#f4f4f1]">Отмена</button>

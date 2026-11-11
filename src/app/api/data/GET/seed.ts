@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import { PrismaClient } from '../../../../generated/prisma/client';
 import { PrismaNeon } from '@prisma/adapter-neon';
 
@@ -10,14 +9,6 @@ if (!connectionString) {
 
 const adapter = new PrismaNeon({ connectionString });
 const prisma = new PrismaClient({adapter});
-
-async function getAdminData() {
-  await prisma.admin.createMany({
-    data: [
-      {name: "Alice", email: "alice@example.com", lastName: "Smith", description: "Alice is a talented artist known for her vibrant paintings."},
-    ]
-  })
-}
 
 async function getGalleryData() {
   await prisma.gallery.createMany({
@@ -56,5 +47,4 @@ async function getGalleryData() {
   })
 }
 
-getAdminData().then(() => prisma.$disconnect());
 getGalleryData().then(() => prisma.$disconnect());

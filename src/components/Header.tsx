@@ -24,11 +24,14 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
           <div className="w-9 h-9 rounded-xl flex items-center justify-center">
-            <Image width={36} height={36} alt="Логотип" className="w-full h-full rounded-xl object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRypW4H3eXJ7Nhi1VcoHaXlxVbILlHnf1ULOwJ6Zw6BUQ&s=10"></Image>
+            {/*<Image width={36} height={36} alt="Логотип" className="w-full h-full rounded-xl object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRypW4H3eXJ7Nhi1VcoHaXlxVbILlHnf1ULOwJ6Zw6BUQ&s=10"></Image>*/}
+            <div className="w-8 h-8 rounded-lg bg-[#C1694F] flex items-center justify-center">
+              <span className="font-serif text-white font-bold text-sm">OL</span>
+            </div>
           </div>
           <div>
-            <div className="font-serif font-bold text-[#1C1B1F] text-sm leading-tight"> Оксана Лапа</div>
-            <div className="text-[10px] text-[#79747E] tracking-wider uppercase">Художник-преподаватель</div>
+            <div className="font-serif font-bold text-[#1C1B1F] text-sm leading-tight">art</div>
+            <div className="text-[10px] text-[#79747E] tracking-wider uppercase">Арт-мастерская • одежда и искусство</div>
           </div>
         </Link>
 

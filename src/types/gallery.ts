@@ -18,4 +18,5 @@ export type GalleryFormValues = {
   status: Status
   image: string
   year: number
+  is_tall: boolean
 }

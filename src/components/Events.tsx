@@ -19,7 +19,7 @@ export default function Events() {
             <div className="relative overflow-hidden h-48 bg-[#E8D5CC]">
               <Image
                 src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=500&h=250&fit=crop&auto=format"
-                alt="Серия STALKER — Полная ретроспектива"
+                alt="Коллекция «Фактура» — показ и выставка"
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
                 sizes="(max-width: 768px) 100vw, 33vw"
@@ -33,11 +33,11 @@ export default function Events() {
               </span>
             </div>
             <div className="p-6">
-              <p className="text-[#C1694F] text-xs font-semibold mb-2">12–18 августа 2026</p>
-              <h3 className="font-serif text-lg font-bold text-[#1C1B1F] mb-1 leading-snug">Серия STALKER — Полная ретроспектива</h3>
-              <p className="text-[#79747E] text-xs font-medium mb-3">Тбилисская ярмарка искусств · Fabrika, Тбилиси</p>
+              <p className="text-[#C1694F] text-xs font-semibold mb-2">12–18 ноября 2026</p>
+              <h3 className="font-serif text-lg font-bold text-[#1C1B1F] mb-1 leading-snug">Коллекция «Фактура» — Показ и выставка</h3>
+              <p className="text-[#79747E] text-xs font-medium mb-3">Центр дизайна Artplay, Москва</p>
               <p className="text-[#49454F] text-sm leading-relaxed">
-                Полная серия керамики STALKER будет впервые показана вместе со времен Венеции 2017 года. 22 сосуда, 8 гравюр и две новые работы, представленные на открытии.
+                Капсульная серия одежды с ручной росписью и интерьерные панно впервые представлены в едином пространстве. 15 образов, авторский текстиль и новые арт-объекты на открытии.
               </p>
             </div>
           </article>
@@ -46,7 +46,7 @@ export default function Events() {
             <div className="relative overflow-hidden h-48 bg-[#E8D5CC]">
               <Image
                 src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=500&h=250&fit=crop&auto=format"
-                alt="Ручная лепка и обжиг Раку"
+                alt="Роспись по ткани и кастомизация одежды"
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
                 sizes="(max-width: 768px) 100vw, 33vw"
@@ -60,11 +60,11 @@ export default function Events() {
               </span>
             </div>
             <div className="p-6">
-              <p className="text-[#C1694F] text-xs font-semibold mb-2">4–5 сентября 2026</p>
-              <h3 className="font-serif text-lg font-bold text-[#1C1B1F] mb-1 leading-snug">Ручная лепка и обжиг Раку</h3>
-              <p className="text-[#79747E] text-xs font-medium mb-3">Мастер-класс: Берлин · Keramik Studio Mitte, Берлин</p>
+              <p className="text-[#C1694F] text-xs font-semibold mb-2">5–6 декабря 2026</p>
+              <h3 className="font-serif text-lg font-bold text-[#1C1B1F] mb-1 leading-snug">Роспись по ткани и кастомизация одежды</h3>
+              <p className="text-[#79747E] text-xs font-medium mb-3">Мастерская OL-art, ул. Покровка, 27, Москва</p>
               <p className="text-[#49454F] text-sm leading-relaxed">
-                Двухдневный интенсивный семинар. Максимум 8 участников. Все материалы предоставляются. Обед включен. По окончании выдается сертификат.
+                Двухдневный практический интенсив. Максимум 8 участников. Все краски, кисти и базовый текстиль предоставляются. По окончании выдается сертификат.
               </p>
             </div>
           </article>
@@ -73,7 +73,7 @@ export default function Events() {
             <div className="relative overflow-hidden h-48 bg-[#E8D5CC]">
               <Image
                 src="https://images.unsplash.com/photo-1493106641515-5d1f1a3c0b58?w=500&h=250&fit=crop&auto=format"
-                alt="Лекция: Народная керамика и живая память"
+                alt="Лекция об искусстве в повседневном гардеробе"
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
                 sizes="(max-width: 768px) 100vw, 33vw"
@@ -87,11 +87,11 @@ export default function Events() {
               </span>
             </div>
             <div className="p-6">
-              <p className="text-[#C1694F] text-xs font-semibold mb-2">22 октября 2026</p>
-              <h3 className="font-serif text-lg font-bold text-[#1C1B1F] mb-1 leading-snug">Лекция: Народная керамика и живая память</h3>
-              <p className="text-[#79747E] text-xs font-medium mb-3">Национальный музей Грузии · Пр. Руставели, Тбилиси</p>
+              <p className="text-[#C1694F] text-xs font-semibold mb-2">15 декабря 2026</p>
+              <h3 className="font-serif text-lg font-bold text-[#1C1B1F] mb-1 leading-snug">Лекция: Искусство в повседневном гардеробе</h3>
+              <p className="text-[#79747E] text-xs font-medium mb-3">Лекторий «Гараж», Парк Горького, Москва</p>
               <p className="text-[#49454F] text-sm leading-relaxed">
-                Публичная лекция, основанная на 30-летнем опыте полевых работ в высокогорных деревнях Грузии. После лекции — сессия вопросов и ответов и автограф-сессия нового издания книги "Глиняная память".
+                Открытая встреча о том, как живопись и декоративные техники переходят с холста на одежду. После лекции — сессия вопросов и презентация авторского зина студии OL-art.
               </p>
             </div>
           </article>

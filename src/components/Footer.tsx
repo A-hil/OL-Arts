@@ -24,11 +24,11 @@ export default function Footer() {
 
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-[#C1694F] flex items-center justify-center">
-              <span className="font-serif text-white font-bold text-sm">N</span>
+              <span className="font-serif text-white font-bold text-sm">OL</span>
             </div>
             <div>
-              <p className="font-serif font-bold text-white text-sm">Нино Беридзе</p>
-              <p className="text-[#79747E] text-[10px] tracking-wider uppercase">Художник-керамист · с 1990</p>
+              <p className="font-serif font-bold text-white text-sm">OL-art</p>
+              <p className="text-[#79747E] text-[10px] tracking-wider uppercase">Арт-мастерская • одежда и искусство</p>
             </div>
           </div>
 
@@ -44,7 +44,7 @@ export default function Footer() {
             ))}
           </div>
 
-          <p className="text-[#49454F] text-xs">© 2026 Нино Беридзе. Все права защищены.</p>
+          <p className="text-[#49454F] text-xs">© 2026 OL-art. Все права защищены.</p>
 
           <Link
             href="/login"
