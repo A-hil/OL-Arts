@@ -17,31 +17,31 @@ export default function Hero() {
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#FBF0EC] rounded-full">
               <span className="w-2 h-2 bg-[#C1694F] rounded-full animate-pulse" />
               <span className="text-xs font-semibold text-[#C1694F] tracking-wide uppercase">
-                TagName
+                АРТ-МАСТЕРСКАЯ • OL-ART
               </span>
             </div>
 
             <h1 className="font-serif text-[clamp(3rem,8vw,5.5rem)] font-bold text-[#1C1B1F] leading-[1.05] tracking-tight">
-              Какой-то<br />
-              <span className="italic text-[#C1694F]">заголовок</span>
+              Искусство, которое<br />
+              <span className="italic text-[#C1694F]">можно носить</span>
             </h1>
 
             <p className="text-[#49454F] text-lg leading-relaxed max-w-[520px]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              Авторская одежда с ручной росписью, интерьерные арт-объекты и творческие мастер-классы. Мы переносим живую фактуру холста в повседневный гардероб и пространство вокруг вас.
             </p>
 
             <div className="flex flex-wrap gap-8 pt-2">
               <div>
-                <div className="font-serif text-3xl font-bold text-[#1C1B1F]">30</div>
-                <div className="text-xs font-medium text-[#79747E] mt-0.5 uppercase tracking-wider">Лет в деле</div>
+                <div className="font-serif text-3xl font-bold text-[#1C1B1F]">10+</div>
+                <div className="text-xs font-medium text-[#79747E] mt-0.5 uppercase tracking-wider">ЛЕТ В ИСКУССТВЕ</div>
               </div>
               <div>
                 <div className="font-serif text-3xl font-bold text-[#1C1B1F]">340+</div>
-                <div className="text-xs font-medium text-[#79747E] mt-0.5 uppercase tracking-wider">Каталогизировано работ</div>
+                <div className="text-xs font-medium text-[#79747E] mt-0.5 uppercase tracking-wider">АВТОРСКИХ РАБОТ</div>
               </div>
               <div>
-                <div className="font-serif text-3xl font-bold text-[#1C1B1F]">12</div>
-                <div className="text-xs font-medium text-[#79747E] mt-0.5 uppercase tracking-wider">Стран с выставками</div>
+                <div className="font-serif text-3xl font-bold text-[#1C1B1F]">45+</div>
+                <div className="text-xs font-medium text-[#79747E] mt-0.5 uppercase tracking-wider">МАСТЕР-КЛАССОВ</div>
               </div>
             </div>
 
@@ -50,13 +50,13 @@ export default function Hero() {
                 href="#work"
                 className="px-6 py-3.5 bg-[#1C1B1F] text-white text-sm font-semibold rounded-full hover:bg-[#C1694F] transition-colors"
               >
-                Смотреть портфолио
+                Смотреть коллекцию
               </a>
               <a
                 href="#timeline"
                 className="px-6 py-3.5 border border-[#E8E0E6] text-[#49454F] text-sm font-semibold rounded-full hover:border-[#C1694F] hover:text-[#C1694F] transition-colors bg-white"
               >
-                Хронология карьеры
+                О мастерской
               </a>
             </div>
           </div>
@@ -80,7 +80,8 @@ export default function Hero() {
                 <div className="absolute bottom-4 left-4 right-4">
                   <div className="flex items-end justify-between">
                     <div>
-                      <p className="text-white font-serif font-bold text-xl">{featuredItem.title}</p>
+                      <p className="text-white font-serif font-bold text-xl">«Странник» — авторская работа</p>
+                      <p className="text-white/85 text-sm mt-1">Холст, акрил, смешанная техника, сюрреализм</p>
                     </div>
                     <StatusPill status="В наличии" />
                   </div>
@@ -88,10 +89,10 @@ export default function Hero() {
               </div>
               <div className="px-5 py-4 flex items-center justify-between">
                 <div>
-                  <p className="text-[#79747E] text-xs">бла бла бла</p>
-                  <p className="text-[#1C1B1F] font-bold text-sm mt-0.5">{featuredItem.year}</p>
+                  <p className="text-[#79747E] text-xs">Лимитированная серия</p>
+                  <p className="text-[#1C1B1F] font-bold text-sm mt-0.5">2026</p>
                 </div>
-                <p className="font-serif text-xl font-bold text-[#C1694F]">{featuredItem.price}</p>
+                <p className="font-serif text-xl font-bold text-[#C1694F]">15 000 руб.</p>
               </div>
             </div>)}
 
