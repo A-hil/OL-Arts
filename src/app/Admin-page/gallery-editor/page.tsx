@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState, type FormEvent} from 'react'
-import { ArrowUpRight, Image as ImageIcon, Pencil, Plus, Search, Trash2, X } from 'lucide-react'
+import { ArrowUpRight, Image as ImageIcon, Plus, Search, Trash2, X } from 'lucide-react'
 import { CATEGORIES } from '../../../data/artwork-content'
 import { statusStyle } from '../../../types/statusStyle'
 import { useGallery } from '../../../hooks/useGallery'
@@ -208,7 +208,7 @@ const DeleteThis = async (id: number) => {
                       <td className="px-4 py-3"><span className={`inline-flex rounded px-2 py-1 text-xs ${statusStyle(item.status)}`}>{item.status}</span></td>
                       <td className="px-5 py-3">
                         <div className="flex justify-end gap-1">
-                          <button onClick={() => openEditArtwork(item)} aria-label={`Редактировать: ${item.title}`} title="Редактировать" className="rounded p-2 text-[#73746e] hover:bg-[#f0efeb] hover:text-[#242522]"><Pencil size={15} /></button>
+                          {/* <button onClick={() => openEditArtwork(item)} aria-label={`Редактировать: ${item.title}`} title="Редактировать" className="rounded p-2 text-[#73746e] hover:bg-[#f0efeb] hover:text-[#242522]"><Pencil size={15} /></button> */}
                           <button onClick={() => DeleteThis(item.id)} aria-label={`Удалить: ${item.title}`} title="Удалить" className="rounded p-2 text-[#92938d] hover:bg-red-50 hover:text-red-700"><Trash2 size={15} /></button>
                         </div>
                       </td>

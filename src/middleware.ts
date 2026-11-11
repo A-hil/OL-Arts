@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import authConfig from "./configs/auth.config";
 
-export const { auth: middleware } = NextAuth(authConfig);
+const { auth } = NextAuth(authConfig);
+export default auth;
 
 // See "Matching Paths" below to learn more
 export const config = {

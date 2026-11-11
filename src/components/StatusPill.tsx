@@ -1,4 +1,4 @@
-import type { Status } from '../data/artwork-content';
+import type { Status } from '../types/gallery';
 
 export default function StatusPill({ status }: { status: Status }) {
   const styles: Record<Status, string> = {
