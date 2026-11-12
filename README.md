@@ -42,8 +42,6 @@ Copy-Item example.env .env
 | `NEXTAUTH_SECRET` | Секрет для подписи сессий Auth.js |
 | `NEXTAUTH_URL` | Базовый URL приложения, например `http://localhost:3000` |
 
-Не добавляйте реальные секреты в Git и не публикуйте строку подключения. `.env` уже исключен из Git.
-
 ### Локальная база PostgreSQL в Docker
 
 В `compose.yaml` настроен порт хоста `5433`, а PostgreSQL внутри контейнера слушает `5432`:
