@@ -20,17 +20,25 @@ branches are separate database environments. The branch/database in the
 connection string used by Prisma must match the branch/database selected in
 the console.
 
-## Check this repository's current migration
+## Check this repository's current migrations
 
-The existing migration
-`prisma/migrations/20261008102917_dobavlenie_novykh_tablits_posty_i_galereya/migration.sql`
-creates `gallery` with `category TEXT NOT NULL`, and does not create a
-`description` column.
+The migration files currently in this repository are:
 
-The current `prisma/schema.prisma` instead declares `category Boolean` and
-includes a required `description String`. If that migration was already
-applied, running `migrate deploy` again will not update `gallery` to match
-these later schema edits. A new migration is needed.
+- `20261023112419_init`: creates the initial `Gallery`, `News`, and `Admin`
+  tables.
+- `20261109214637_naznachenie_novykh_tablits_pereopredelenie_starykh`: adds
+  the authentication tables and `Role` enum.
+- `20261111113019_init`: reshapes the `Account` model, removes the old `News`
+  and `Admin` tables, and creates `Post` and `VerificationToken`.
+- `20261111201500_restore_account_provider_unique`: restores the unique
+  constraint on the account provider and provider account ID.
+
+The current `prisma/schema.prisma` defines `Gallery.category` as `String` and
+`Gallery.description` as required, matching the original `Gallery` table
+definition. It also defines `Post` and the Auth.js models. Compare the schema
+with the migration history and the target database before creating another
+migration; do not rely on the previous migration name or schema description
+from older copies of this guide.
 
 ## Safe workflow
 
